@@ -2,7 +2,7 @@
 clear, clc, close all
 
 subindex = @(A, r) A(r);
-file_path = "data/ford_custom_open_2014-4.MOV";
+file_path = "data/ford_custom_closed_2014-4.MOV";
 [data, fs] = load_audio_from_file(file_path);
 
 C.SAMPLE_TIME = 0.5; % in sec
