@@ -1,3 +1,5 @@
 data/*
 !data/.gitkeep
+!data/splash.jpg
+!data/symbol_cvut_plna_doplnkova_verze.jpg
 AcousticTachometer.prj
