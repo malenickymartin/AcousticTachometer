@@ -1,3 +1,5 @@
+% Lightweight version of the application used for testing without GUI
+
 clear, clc, close all
 
 [mic, fs, disp_rpm, C] = config();
