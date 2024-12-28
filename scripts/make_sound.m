@@ -1,3 +1,4 @@
+%% Signal 1
 close all
 
 fs = 44100; % Sampling frequency
@@ -40,6 +41,35 @@ signal3 = wave1 + wave2;
 final_signal = [signal1, signal2, signal3];
 final_signal = final_signal/max(abs(final_signal));
 
+%% Signal 2
+close all
+
+fs = 44100; % Sampling frequency in Hz
+t_steady = 5; % Duration of steady sine signal in seconds
+f_steady = 67; % Frequency of steady sine signal in Hz
+t_vary = 5; % Duration of varying frequency signal in seconds
+f_min = 50; % Minimum frequency of varying sine
+f_max = 84; % Maximum frequency of varying sine
+
+% Time vectors
+t1 = 0:1/fs:t_steady-1/fs; % Time vector for steady sine
+t2 = 0:1/fs:t_vary-1/fs; % Time vector for varying sine
+
+% Steady sine signal
+steady_signal = 0.025*sin(2*pi*f_steady*t1);
+
+% Varying frequency sine signal
+freq_vary = (f_max - f_min) / 2 * sin(2*pi*0.5*t2) + (f_max + f_min) / 2; % Frequency varies as sine
+vary_signal = sin(2*pi*cumsum(freq_vary/fs)); % Sine wave with time-varying frequency
+
+freq_range = [40 94]; % Frequency range of noise
+noise = bandpass(randn(size(t2)), freq_range, fs);
+
+% Combine signals
+final_signal = [steady_signal, noise, steady_signal];
+
+
+%% STFT
 samples_duration = ceil(fs*0.5);
 overlap = round(samples_duration/2);
 f = linspace(0, 120, samples_duration/2);
@@ -52,7 +82,7 @@ fig = figure;
 plot_s = abs(s);
 plot_s(plot_s < min(20*log10(max(plot_s)))) = 0.9*min(20*log10(max(plot_s)));
 imagesc(t, rpm, plot_s)
-colormap jet
+colormap(flipud(gray))
 axis xy
 xlabel("čas [s]")
 ylabel("frequency [Hz]")
